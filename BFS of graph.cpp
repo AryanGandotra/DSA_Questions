@@ -9,7 +9,6 @@ public:
         queue<int> q;
         q.push(0);
         visited[0] = 1;
-        int i = 1;
 
         while (!q.empty())
         {
