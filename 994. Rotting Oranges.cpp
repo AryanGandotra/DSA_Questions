@@ -1,58 +1,6 @@
 class Solution
 {
 public:
-    void rotten(queue<pair<pair<int, int>, int>> &q, vector<vector<int>> &grid,
-                vector<vector<int>> &visited, int n, int m, int &ansTime)
-    {
-
-        while (!q.empty())
-        {
-            int r = q.front().first.first;
-            int c = q.front().first.second;
-            int time = q.front().second;
-
-            q.pop();
-
-            if (visited[r][c] == 0)
-            {
-                visited[r][c] = 1;
-                ansTime = max(ansTime, time);
-
-                // up
-                if (r - 1 >= 0 && grid[r - 1][c] == 1 &&
-                    visited[r - 1][c] == 0)
-                {
-                    grid[r - 1][c] = 2;
-                    q.push({{r - 1, c}, time + 1});
-                }
-
-                // down
-                if (r + 1 < n && grid[r + 1][c] == 1 &&
-                    visited[r + 1][c] == 0)
-                {
-                    grid[r + 1][c] = 2;
-                    q.push({{r + 1, c}, time + 1});
-                }
-
-                // left
-                if (c - 1 >= 0 && grid[r][c - 1] == 1 &&
-                    visited[r][c - 1] == 0)
-                {
-                    grid[r][c - 1] = 2;
-                    q.push({{r, c - 1}, time + 1});
-                }
-
-                // right
-                if (c + 1 < m && grid[r][c + 1] == 1 &&
-                    visited[r][c + 1] == 0)
-                {
-                    grid[r][c + 1] = 2;
-                    q.push({{r, c + 1}, time + 1});
-                }
-            }
-        }
-    }
-
     int orangesRotting(vector<vector<int>> &grid)
     {
         int time = 0;
@@ -68,11 +16,50 @@ public:
                 if (grid[i][j] == 2)
                 {
                     q.push({{i, j}, 0});
+                    visited[i][j] = 2;
                 }
             }
         }
 
-        rotten(q, grid, visited, n, m, time);
+        while (!q.empty())
+        {
+            int r = q.front().first.first;
+            int c = q.front().first.second;
+            int t = q.front().second;
+
+            q.pop();
+
+            visited[r][c] = 1;
+            time = max(time, t);
+
+            // up
+            if (r - 1 >= 0 && grid[r - 1][c] == 1 && visited[r - 1][c] == 0)
+            {
+                grid[r - 1][c] = 2;
+                q.push({{r - 1, c}, time + 1});
+            }
+
+            // down
+            if (r + 1 < n && grid[r + 1][c] == 1 && visited[r + 1][c] == 0)
+            {
+                grid[r + 1][c] = 2;
+                q.push({{r + 1, c}, time + 1});
+            }
+
+            // left
+            if (c - 1 >= 0 && grid[r][c - 1] == 1 && visited[r][c - 1] == 0)
+            {
+                grid[r][c - 1] = 2;
+                q.push({{r, c - 1}, time + 1});
+            }
+
+            // right
+            if (c + 1 < m && grid[r][c + 1] == 1 && visited[r][c + 1] == 0)
+            {
+                grid[r][c + 1] = 2;
+                q.push({{r, c + 1}, time + 1});
+            }
+        }
 
         for (int i = 0; i < n; i++)
         {
