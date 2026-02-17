@@ -1,3 +1,27 @@
+// tabulation + Space optimization
+
+class Solution
+{
+public:
+    int rob(vector<int> &nums)
+    {
+        int n = nums.size();
+        vector<int> dp(n + 1, -1);
+        int prev2 = 0, prev = nums[0];
+
+        for (int i = 2; i <= n; i++)
+        {
+            int pick = nums[i - 1] + prev2;
+            int notpick = prev;
+            int curr = max(pick, notpick);
+            prev2 = prev;
+            prev = curr;
+        }
+
+        return prev;
+    }
+};
+
 // tabulation
 
 class Solution
