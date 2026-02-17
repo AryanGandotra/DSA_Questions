@@ -1,34 +1,33 @@
+// memoization
+
 class Solution
 {
 public:
-    int dp[101];
-
-    int solve(vector<int> &nums, int n)
+    int helper(int index, vector<int> &nums, vector<int> &dp)
     {
-        if (n <= 0)
-            return 0;
-        if (n == 1)
-            return nums[0];
-
-        dp[0] = nums[0];
-        dp[1] = max(nums[0], nums[1]);
-
-        for (int i = 2; i < n; i++)
+        if (index == 0)
         {
-            dp[i] = max(dp[i - 1], dp[i - 2] + nums[i]);
+            return nums[index];
+        }
+        if (index < 0)
+        {
+            return 0;
         }
 
-        return dp[n - 1];
-    }
+        if (dp[index] != -1)
+        {
+            return dp[index];
+        }
 
+        int pick = nums[index] + helper(index - 2, nums, dp);
+        int notpick = helper(index - 1, nums, dp);
+
+        return dp[index] = max(pick, notpick);
+    }
     int rob(vector<int> &nums)
     {
-
         int n = nums.size();
-
-        if (n == 1)
-            return nums[0];
-
-        return solve(nums, n);
+        vector<int> dp(n + 1, -1);
+        return helper(n - 1, nums, dp);
     }
 };
