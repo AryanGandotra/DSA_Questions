@@ -1,3 +1,38 @@
+// tabulation + Space optimisation
+class Solution
+{
+public:
+    int maximumPoints(vector<vector<int>> &mat)
+    {
+        int n = mat.size();
+        vector<int> dp(4, 0);
+
+        dp[0] = max(mat[0][1], mat[0][2]);
+        dp[1] = max(mat[0][0], mat[0][2]);
+        dp[2] = max(mat[0][0], mat[0][1]);
+        dp[3] = max(mat[0][0], max(mat[0][1], mat[0][2]));
+
+        for (int day = 1; day < n; day++)
+        {
+            vector<int> currDay(4, 0);
+            for (int last = 0; last < 4; last++)
+            {
+                for (int task = 0; task < 3; task++)
+                {
+                    if (task != last)
+                    {
+                        int points = mat[day][task] + dp[task];
+                        currDay[last] = max(currDay[last], points);
+                    }
+                }
+            }
+            dp = currDay;
+        }
+
+        return dp[3];
+    }
+};
+
 // tabulation
 class Solution
 {
