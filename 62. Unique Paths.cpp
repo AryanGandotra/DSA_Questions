@@ -1,4 +1,28 @@
-//tabulation
+//tabulation + space optimisation
+
+class Solution
+{
+public:
+    int uniquePaths(int m, int n)
+    {
+
+        vector<int> prevRow(n, 1);
+
+        for (int currRow = 1; currRow < m; currRow++)
+        {
+            vector<int> dp(n, 1);
+            for (int currCol = 1; currCol < n; currCol++)
+            {
+                dp[currCol] = prevRow[currCol] + dp[currCol - 1];
+            }
+            prevRow = dp;
+        }
+
+        return prevRow[n - 1];
+    }
+};
+
+// tabulation
 class Solution
 {
 public:
