@@ -1,3 +1,23 @@
+//tabulation
+class Solution
+{
+public:
+    int uniquePaths(int m, int n)
+    {
+        vector<vector<int>> dp(m, vector<int>(n, 1));
+
+        for (int currRow = 1; currRow < m; currRow++)
+        {
+            for (int currCol = 1; currCol < n; currCol++)
+            {
+                dp[currRow][currCol] = dp[currRow - 1][currCol] + dp[currRow][currCol - 1];
+            }
+        }
+
+        return dp[m - 1][n - 1];
+    }
+};
+
 // memoisation - starting from m-1,n-1
 
 class Solution
