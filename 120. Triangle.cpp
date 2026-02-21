@@ -1,4 +1,37 @@
+// tabualation + space optimisation
+
+class Solution
+{
+public:
+    int minimumTotal(vector<vector<int>> &triangle)
+    {
+        int m = triangle.size(), n = triangle[m - 1].size();
+        vector<int> temp(n, 0);
+
+        for (int i = m - 1; i >= 0; i--)
+        {
+            vector<int> dp(n, 0);
+            for (int j = i; j >= 0; j--)
+            {
+                if (i == m - 1)
+                    dp[j] = triangle[i][j];
+
+                else
+                {
+                    int down = triangle[i][j] + temp[j];
+                    int diagonal = triangle[i][j] + temp[j + 1];
+                    dp[j] = min(down, diagonal);
+                }
+            }
+            temp = dp;
+        }
+
+        return temp[0];
+    }
+};
+
 // tabualation
+
 class Solution
 {
 public:
