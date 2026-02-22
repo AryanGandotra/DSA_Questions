@@ -1,4 +1,49 @@
+// tabulation + Space optimisation
+
+class Solution
+{
+public:
+    int maximumPath(vector<vector<int>> &mat)
+    {
+        int m = mat.size(), n = mat[0].size();
+
+        vector<int> temp(n, 0);
+
+        for (int j = 0; j < n; j++)
+            temp[j] = mat[0][j];
+
+        for (int i = 1; i < m; i++)
+        {
+            vector<int> dp(n, 0);
+            for (int j = 0; j < n; j++)
+            {
+
+                int up = INT_MIN, upRight = INT_MIN, upLeft = INT_MIN;
+
+                up = mat[i][j] + temp[j];
+
+                if (j < n - 1)
+                    upRight = mat[i][j] + temp[j + 1];
+                if (j > 0)
+                    upLeft = mat[i][j] + temp[j - 1];
+
+                dp[j] = max(up, max(upRight, upLeft));
+            }
+            temp = dp;
+        }
+
+        int result = INT_MIN;
+
+        for (int i = 0; i < n; i++)
+        {
+            result = max(result, temp[i]);
+        }
+        return result;
+    }
+};
+
 // tabulation
+
 class Solution
 {
 public:
