@@ -1,3 +1,44 @@
+// tabulation
+class Solution
+{
+public:
+    int maximumPath(vector<vector<int>> &mat)
+    {
+        int m = mat.size(), n = mat[0].size();
+
+        vector<vector<int>> dp(m, vector<int>(n, 0));
+
+        for (int j = 0; j < n; j++)
+            dp[0][j] = mat[0][j];
+
+        for (int i = 1; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+
+                int up = INT_MIN, upRight = INT_MIN, upLeft = INT_MIN;
+
+                up = mat[i][j] + dp[i - 1][j];
+
+                if (j < n - 1)
+                    upRight = mat[i][j] + dp[i - 1][j + 1];
+                if (j > 0)
+                    upLeft = mat[i][j] + dp[i - 1][j - 1];
+
+                dp[i][j] = max(up, max(upRight, upLeft));
+            }
+        }
+
+        int result = INT_MIN;
+
+        for (int i = 0; i < n; i++)
+        {
+            result = max(result, dp[m - 1][i]);
+        }
+        return result;
+    }
+};
+
 // memoisation
 
 class Solution
