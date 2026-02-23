@@ -1,3 +1,33 @@
+// tabulation + space optimisation
+
+#include <bits/stdc++.h>
+bool subsetSumToK(int n, int k, vector<int> &nums)
+{
+    vector<bool> dp(k + 1, false);
+    dp[0] = true;
+
+    if (nums[0] <= k)
+        dp[nums[0]] = true;
+
+    for (int i = 1; i < n; i++)
+    {
+        vector<bool> curr(k + 1, false);
+        curr[0] = true;
+        for (int j = 1; j <= k; j++)
+        {
+            bool take = false;
+            if (j >= nums[i])
+                take = dp[j - nums[i]];
+
+            bool notTake = dp[j];
+
+            curr[j] = take || notTake;
+        }
+        dp = curr;
+    }
+    return dp[k];
+}
+
 // tabulation
 #include <bits/stdc++.h> 
 bool subsetSumToK(int n, int k, vector<int> &nums){
