@@ -1,3 +1,50 @@
+// memoisation
+
+class Solution
+{
+public:
+    bool subArraySum(int index, int target, vector<int> &nums, vector<vector<int>> &dp)
+    {
+        if (target == 0)
+            return true;
+
+        if (index == 0)
+            return target == nums[0];
+
+        if (dp[index][target] != -1)
+            return dp[index][target];
+
+        // not pick
+        bool notPick = subArraySum(index - 1, target, nums, dp);
+
+        // pick
+        bool pick = false;
+
+        if (target >= nums[index])
+            pick = subArraySum(index - 1, target - nums[index], nums, dp);
+
+        return dp[index][target] = pick || notPick;
+    }
+
+    bool canPartition(vector<int> &nums)
+    {
+        int arraySum = 0;
+        int n = nums.size();
+
+        for (int i = 0; i < n; i++)
+            arraySum += nums[i];
+
+        int target = arraySum / 2;
+
+        vector<vector<int>> dp(n, vector(target + 1, -1));
+
+        if (arraySum % 2 == 1)
+            return false;
+
+        return subArraySum(n - 1, target, nums, dp);
+    }
+};
+
 class Solution
 {
 public:
