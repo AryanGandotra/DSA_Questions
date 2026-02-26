@@ -33,8 +33,12 @@ class Solution
 public:
     int func(int index, vector<int> &val, vector<int> &wt, int W, vector<vector<int>> &dp)
     {
-        if (W <= 0 || index < 0)
+        if (index == 0)
+        {
+            if (wt[0] <= W)
+                return val[0];
             return 0;
+        }
 
         if (dp[index][W] != -1)
             return dp[index][W];
