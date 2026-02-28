@@ -61,8 +61,6 @@ public:
 
     int coinChange(vector<int> &coins, int amount)
     {
-        if (amount <= 0)
-            return 0;
         int n = coins.size();
         vector<vector<int>> dp(n, vector<int>(amount + 1, -1));
         int ans = func(n - 1, coins, amount, dp);
