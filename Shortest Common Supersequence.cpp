@@ -23,6 +23,6 @@ public:
             }
         }
 
-        return m + n - (2 * dp[m][n]) + dp[m][n];
+        return m + n - dp[m][n];
     }
 };
