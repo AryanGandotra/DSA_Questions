@@ -8,18 +8,17 @@ public:
         if (s.length() != t.length())
             return false;
 
-        int n = s.length();
-        int arr[26] = {0};
+        vector<int> freq(26, 0);
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < s.length(); i++)
         {
-            arr[s[i] - 'a']++;
-            arr[t[i] - 'a']--;
+            freq[s[i] - 'a']++;
+            freq[t[i] - 'a']--;
         }
 
-        for (int i = 0; i < 26; i++)
+        for (int i = 0; i < freq.size(); i++)
         {
-            if (arr[i] > 0)
+            if (freq[i] != 0)
                 return false;
         }
 
