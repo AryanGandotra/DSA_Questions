@@ -3,18 +3,15 @@ class Solution
 public:
     vector<int> replaceElements(vector<int> &arr)
     {
-        // O(N) Time Complexity , O(1) Space complexity
-        int n = arr.size();
-        int maxSoFar = arr[n - 1];
-        arr[n - 1] = -1;
+        int maxElementOnRight = -1;
 
-        for (int i = n - 2; i >= 0; i--)
+        for (int i = arr.size() - 1; i >= 0; i--)
         {
-            int temp = maxSoFar;
-            if (maxSoFar < arr[i])
-                maxSoFar = arr[i];
-            arr[i] = temp;
+            int temp = arr[i];
+            arr[i] = maxElementOnRight;
+            maxElementOnRight = max(maxElementOnRight, temp);
         }
+
         return arr;
     }
 };
