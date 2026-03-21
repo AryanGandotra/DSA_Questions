@@ -15,10 +15,10 @@ public:
 
         for (int i = 0; i < positives.size(); i++)
         {
-            ans.push_back(positives[i]);
-            ans.push_back(negatives[i]);
+            nums[2 * i] = positives[i];
+            nums[2 * i + 1] = negatives[i];
         }
 
-        return ans;
+        return nums;
     }
 };
