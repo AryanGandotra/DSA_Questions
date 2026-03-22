@@ -1,6 +1,26 @@
 class Solution
 {
 public:
+    vector<int> getRow(int rowIndex)
+    {
+        vector<int> result(rowIndex + 1, 1);
+        long long ans = 1, row = rowIndex;
+
+        for (int i = 1; i <= rowIndex / 2; i++)
+        {
+            ans = (ans * row) / i;
+            result[i] = ans;
+            result[rowIndex - i] = ans;
+            row--;
+        }
+
+        return result;
+    }
+};
+
+class Solution
+{
+public:
     int funcNCR(int n, int r)
     {
         long long res = 1;
