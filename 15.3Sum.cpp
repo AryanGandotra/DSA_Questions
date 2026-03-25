@@ -1,47 +1,45 @@
-
 class Solution
 {
 public:
-    vector<vector<int>> threeSum(vector<int> &numbers)
+    vector<vector<int>> threeSum(vector<int> &nums)
     {
-        sort(numbers.begin(), numbers.end());
+        sort(nums.begin(), nums.end());
+        int n = nums.size();
+        vector<vector<int>> ans;
 
-        vector<vector<int>> result;
-
-        for (int k = 0; k < numbers.size(); k++)
+        for (int i = 0; i < n; i++)
         {
+            if (i > 0 && nums[i] == nums[i - 1])
+                continue;
 
-            int target = -numbers[k];
-            int i = k + 1;
-            int j = numbers.size() - 1;
+            int j = i + 1, k = n - 1;
 
-            // so the i and j values are fixed before moving k as when k proceeds further
-            // remains behind and duplicates are handled and when k iterates duplicates are
-            // avoided
-
-            while (k + 1 < numbers.size() && numbers[k + 1] == numbers[k])
-                k++;
-
-            while (i < j)
+            while (j < k)
             {
-
-                if (numbers[i] + numbers[j] < target)
-                    i++;
-                else if (numbers[i] + numbers[j] > target)
-                    j--;
+                int sum = nums[i] + nums[j] + nums[k];
+                if (sum < 0)
+                {
+                    j++;
+                }
+                else if (sum > 0)
+                {
+                    k--;
+                }
                 else
                 {
-                    vector<int> triplet = {numbers[k], numbers[i], numbers[j]};
-                    result.push_back(triplet);
+                    vector<int> temp = {nums[i], nums[j], nums[k]};
+                    ans.push_back(temp);
+                    j++;
+                    k--;
 
-                    while (i < j && (numbers[i] == triplet[1]))
-                        i++;
-
-                    while (i < j && (numbers[j] == triplet[2]))
-                        j--;
+                    while (j < k && nums[j] == nums[j - 1])
+                        j++;
+                    while (k > 0 && nums[k] == nums[k + 1])
+                        k--;
                 }
             }
         }
-        return result;
+
+        return ans;
     }
 };
