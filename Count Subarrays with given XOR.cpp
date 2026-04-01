@@ -17,7 +17,7 @@ public:
 
         return ans;
     }
-};
+}; 
 
 // brute force - will give TLE
 
