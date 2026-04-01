@@ -7,14 +7,11 @@ public:
         int ans = 0, runningXor = 0, n = arr.size();
         map<int, int> hashmap;
         hashmap[0] = 1;
+
         for (int i = 0; i < n; i++)
         {
             runningXor ^= arr[i];
-            if (hashmap.find(k ^ runningXor) != hashmap.end())
-            {
-                ans += hashmap[k ^ runningXor];
-            }
-
+            ans += hashmap[k ^ runningXor];
             hashmap[runningXor]++;
         }
 
