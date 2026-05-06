@@ -1,45 +1,27 @@
-class Solution
-{
+class Solution {
 public:
-    long long getHoursToEatAll(vector<int> &piles, int bananasPerHour)
-    {
-        long long totalHours = 0;
-        for (int i = 0; i < piles.size(); i++)
-        {
-            int hoursToEatPile = ceil(piles[i] / (double)bananasPerHour);
-            totalHours += hoursToEatPile;
+    long long func(vector<int>& piles, int mid) {
+        long long ans = 0;
+        for (int i = 0; i < piles.size(); i++) {
+            ans += ceil((double)piles[i] / mid);
         }
-        return totalHours;
+        return ans;
     }
-    int minEatingSpeed(vector<int> &piles, int h)
-    {
-        int max = INT_MIN;
+
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int low = 1, high = INT_MIN, ans = -1;
 
         for (int i = 0; i < piles.size(); i++)
-        {
-            if (max <= piles[i])
-                max = piles[i];
-        }
+            high = max(high, piles[i]);
 
-        int start = 1;
-        int end = max;
-        int mid;
-
-        int ans = -1;
-
-        while (start <= end)
-        {
-            mid = start + (end - start) / 2;
-
-            long long hoursToEatAll = getHoursToEatAll(piles, mid);
-
-            if (hoursToEatAll <= h)
-            {
+        while (low <= high) {
+            int mid = (low + high)/ 2;
+            long long val = func(piles, mid);
+            if (val <= h) {
                 ans = mid;
-                end = mid - 1;
-            }
-            else
-                start = mid + 1;
+                high = mid - 1;
+            } else
+                low = mid + 1;
         }
         return ans;
     }
